@@ -361,3 +361,5 @@ MigrationBackup/
 
 # AppSettings
 appsettings.json
+VSDProjekt/appsettings.json
+*.json
