@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VSDProjekt.Data;
 
 namespace VSDProjekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210226145711_Zariadenia")]
+    partial class Zariadenia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,26 +245,6 @@ namespace VSDProjekt.Data.Migrations
                     b.ToTable("zariadenie");
                 });
 
-            modelBuilder.Entity("VSDProjekt.Model.zasuvka", b =>
-                {
-                    b.Property<int>("zasuvkaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("zariadenieID")
-                        .HasColumnType("int");
-
-                    b.HasKey("zasuvkaID");
-
-                    b.HasIndex("zariadenieID");
-
-                    b.ToTable("zasuvka");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -312,17 +294,6 @@ namespace VSDProjekt.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("VSDProjekt.Model.zasuvka", b =>
-                {
-                    b.HasOne("VSDProjekt.Model.zariadenie", "Zariadenie")
-                        .WithMany()
-                        .HasForeignKey("zariadenieID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Zariadenie");
                 });
 #pragma warning restore 612, 618
         }

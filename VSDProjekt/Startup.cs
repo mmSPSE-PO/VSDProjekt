@@ -33,7 +33,11 @@ namespace VSDProjekt
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Zariadenia");
+                options.Conventions.AuthorizeFolder("/Zasuvky");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

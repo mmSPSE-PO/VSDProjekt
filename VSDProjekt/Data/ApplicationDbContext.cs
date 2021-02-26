@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using VSDProjekt.Model;
 
 namespace VSDProjekt.Data
 {
@@ -12,5 +13,7 @@ namespace VSDProjekt.Data
             : base(options)
         {
         }
+        public DbSet<VSDProjekt.Model.zariadenie> zariadenie { get; set; }
+        public DbSet<VSDProjekt.Model.zasuvka> zasuvka { get; set; }
     }
 }
