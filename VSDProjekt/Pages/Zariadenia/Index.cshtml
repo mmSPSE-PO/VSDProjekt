@@ -8,56 +8,57 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container">
+    <h1>Index</h1>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.zariadenie[0].Nazov)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.zariadenie[0].Spotreba)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.zariadenie[0].Dlzka)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.zariadenie[0].UserID)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.zariadenie)
-        {
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nazov)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Spotreba)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dlzka)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserID)
-                </td>
-                @if (item.UserID == UserManager.GetUserId(User))
-                {
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.zariadenieID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.zariadenieID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.zariadenieID">Delete</a>
-                </td>
-                }
-                    
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].Nazov)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].Spotreba)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].Dlzka)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].UserID)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.zariadenie)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazov)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Spotreba) W/h
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dlzka) h
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    @if (item.UserID == UserManager.GetUserId(User))
+                    {
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.zariadenieID">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.zariadenieID">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.zariadenieID">Delete</a>
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
