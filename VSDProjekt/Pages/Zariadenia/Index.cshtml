@@ -23,7 +23,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.zariadenie[0].Spotreba)
                 </th>
-                <th>
+                <th style="width:50%">
                     @Html.DisplayNameFor(model => model.zariadenie[0].Dlzka)
                 </th>
                 <th>
@@ -43,7 +43,12 @@
                         @Html.DisplayFor(modelItem => item.Spotreba) W/h
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Dlzka) h
+                        <div style="width:100%">
+                            <div style="width:@((int)((item.Dlzka/24)*100)+"%");background-color:rgba(255,265,0,0.5);display:inline-block">
+                                @Html.DisplayFor(modelItem => item.Dlzka) h
+                            </div>
+                        </div>
+                        
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UserID)

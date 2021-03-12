@@ -27,6 +27,14 @@
             {
                 <tr>
                     <td>
+                        @if (item.zariadenieID == null)
+                        {
+                            <img src="/img/UnPlugged.jpg" alt="Alternate Text" class="img-fluid" />
+                        }
+                        else
+                        { 
+                            <img src="/img/Plugged.jpg" alt="Alternate Text" class="img-fluid"/>
+                        }
                         @Html.DisplayFor(modelItem => item.Zariadenie.zariadenieID)
                     </td>
                     <td>

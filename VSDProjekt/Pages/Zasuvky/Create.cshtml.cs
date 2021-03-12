@@ -42,7 +42,9 @@ namespace VSDProjekt.Pages.Zasuvky
                 return Page();
             }
 
+            zasuvka.UserID = _userManager.GetUserId(User);
             _context.zasuvka.Add(zasuvka);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
