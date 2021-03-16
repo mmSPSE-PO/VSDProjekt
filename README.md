@@ -3,6 +3,7 @@
 This is a project for competition from VSD.
 [http://vsdprojekt.azurewebsites.net/](http://vsdprojekt.azurewebsites.net/)
 
+These are features on the website not ticked are in progress.
 > As user you can:  
 > * [x] register  
 >> add to your profile:  
@@ -14,3 +15,5 @@ This is a project for competition from VSD.
 
 > As admin you can:
 > * [ ] see total power compsuption per hour
+
+![](VSDProjekt/wwwroot/img/turn-on-2933016_1920.jpg)
