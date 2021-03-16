@@ -17,6 +17,9 @@
                     @Html.DisplayNameFor(model => model.zasuvka[0].Zariadenie)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.zasuvka[0].StartTime)
+                </th>
+                <th class="d-none">
                     @Html.DisplayNameFor(model => model.zasuvka[0].UserID)
                 </th>
                 <th></th>
@@ -29,15 +32,18 @@
                     <td>
                         @if (item.zariadenieID == null)
                         {
-                            <img src="/img/UnPlugged.jpg" alt="Alternate Text" class="img-fluid" />
+                            <img src="/img/Unplug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px"/>
                         }
                         else
                         { 
-                            <img src="/img/Plugged.jpg" alt="Alternate Text" class="img-fluid"/>
+                            <img src="/img/plug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px"/>
                         }
                         @Html.DisplayFor(modelItem => item.Zariadenie.zariadenieID)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td class="d-none">
                         @Html.DisplayFor(modelItem => item.UserID)
                     </td>
                     <td>

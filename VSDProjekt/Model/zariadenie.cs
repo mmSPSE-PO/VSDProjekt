@@ -12,9 +12,9 @@ namespace VSDProjekt.Model
         [MaxLength(200)]
         public string Nazov { get; set; }
         [Range(0.0,220*20, ErrorMessage = "Pole musí byť väščie ako 0 a menšie ako 4400")]
-        public double Spotreba { get; set; }
+        public float Spotreba { get; set; }
         [Range(0.0, 24, ErrorMessage = "Pole musí byť väščie ako 0 a menšie ako 24")]
-        public double Dlzka { get; set; }
+        public float Dlzka { get; set; }
 
         public string UserID { get; set; }
     }

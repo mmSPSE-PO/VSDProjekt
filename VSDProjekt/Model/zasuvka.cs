@@ -12,6 +12,9 @@ namespace VSDProjekt.Model
         public int? zariadenieID { get; set; }
         public zariadenie Zariadenie { get; set; }
 
+        [DataType(DataType.Time)]
+        public DateTime StartTime { get; set; }
+
         public string UserID { get; set; }
     }
 }

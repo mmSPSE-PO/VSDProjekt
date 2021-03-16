@@ -37,7 +37,7 @@ namespace VSDProjekt.Pages.Zasuvky
             {
                 return NotFound();
             }
-           ViewData["zariadenieID"] = new SelectList(_context.zariadenie, "zariadenieID", "zariadenieID");
+            ViewData["zariadenieID"] = new SelectList(_context.zariadenie, "zariadenieID", "Nazov");
             return Page();
         }
 
