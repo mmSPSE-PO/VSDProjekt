@@ -5,9 +5,9 @@ This is a project for competition from VSD.
 
 > As user you can:  
 > * [x] register  
-> add to your profile:  
-> * [x] devices at your home  
-> * [x] plugs at your home  
+>> add to your profile:  
+>> * [x] devices at your home  
+>> * [x] plugs at your home  
 > * [x] assign devices to the plugs  
 > * [ ] change the duration of the devices working  
 > * [ ] see power compsumption per hour  
