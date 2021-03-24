@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using VSDProjekt.Data;
@@ -14,9 +13,11 @@ namespace VSDProjekt.Pages.Zasuvky
     {
         private readonly VSDProjekt.Data.ApplicationDbContext _context;
 
+        public float[] Hodiny { get; set; }
         public IndexModel(VSDProjekt.Data.ApplicationDbContext context)
         {
             _context = context;
+            Hodiny = new float[24];
         }
 
         public IList<zasuvka> zasuvka { get;set; }
