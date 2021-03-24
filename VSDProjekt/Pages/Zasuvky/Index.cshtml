@@ -107,7 +107,6 @@
             </tr>
         </tbody>
     </table>
-    @($"[{string.Join(",",Enumerable.Range(0,24).ToArray())}]")
     <canvas id="myChart"></canvas>
 </div>
 
@@ -119,10 +118,20 @@
             labels: @($"[{string.Join(",",Enumerable.Range(0,24).ToArray())}]"),
             datasets: [{
                 label: 'all',
-                data: @($"[{string.Join(",","")}]",
+                data: @($"[{string.Join(",",Model.Hodiny)}]"),
                 backgroundColor: "rgba(153,255,51,0.4)"
             }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     });
 
 </script>
+
