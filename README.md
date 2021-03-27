@@ -12,6 +12,7 @@ These are features on the website not ticked are in progress.
 >> add to your profile(virtually):  
 >> * [x] devices at your home  
 >> * [x] plugs at your home  
+>
 >> add to your profile(physically):
 >> * [ ] plugs at your home
 >> * [ ] automatically add device to the plug
