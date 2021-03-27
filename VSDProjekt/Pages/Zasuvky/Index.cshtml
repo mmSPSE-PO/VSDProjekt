@@ -1,0 +1,137 @@
+﻿@page
+@model VSDProjekt.Pages.Zasuvky.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<div class="container">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.zasuvka[0].Zariadenie)
+                </th>
+                <th>
+                    Časová os:
+                    @*Html.DisplayNameFor(model => model.zasuvka[0].StartTime)*@
+                </th>
+                <th class="d-none">
+                    @Html.DisplayNameFor(model => model.zasuvka[0].UserID)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="p-1">
+                    Čas (h):
+                </td>
+                <td class="d-flex w-100 p-0">
+                    @for (int i = 0; i < 12; i++)
+                    {
+                        <span style="flex:1;border-left:1px solid red;flex-grow:1">@(i * 2):00</span>
+                    }
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            @foreach (var item in Model.zasuvka)
+            {
+                <tr>
+                    <td>
+                        @if (item.zariadenieID == null)
+                        {
+                            <img src="/img/Unplug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px" />
+                        }
+                        else
+                        {
+                            <img src="/img/plug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px" />
+                        }
+                        @Html.DisplayFor(modelItem => item.Zariadenie.Nazov)
+                    </td>
+                    <td style="width:100%" class="position-relative pl-0 pr-0">
+                        @if (item.Zariadenie != null)
+                        {
+                            <div style="width:100%;">
+                                <p style="width:@((int)((item.Zariadenie.Dlzka / 24.0) * 100.0) + "%");margin-left:@((int)((item.StartTime.Hour / 24.0) * 100.0) + "%");background-color:rgba(255,265,0,0.5);display:inline-block">
+                                    @Html.DisplayFor(modelItem => item.Zariadenie.Dlzka) h
+                                </p>
+                            </div>
+                            @Html.DisplayFor(modelItem => item.StartTime);
+                        }
+                        <div class="position-absolute w-100 h-100 d-flex flex-fill align-items-stretch" style="left:0;top:0;right:0;bottom:0">
+                            @for (int i = 0; i < 24; i++)
+                            {
+                                <div class="h-100 d-flex" style="flex-grow: 1; border-width:0 0.5px; border-style: solid;border-color:rgba(0,0,0,0.2)">_ </div>
+                            }
+                        </div>
+
+                    </td>
+                    <td class="d-none">
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.zasuvkaID">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@item.zasuvkaID">Delete</a>
+                    </td>
+                </tr>
+                if (item.Zariadenie != null)
+                    for (int i = 0; i < 24; i++)
+                    {
+                        double a = item.StartTime.Hour + item.StartTime.Minute / 60.0;
+                        if ((i >= a) && (i <= a + item.Zariadenie.Dlzka))
+                            Model.Hodiny[i] += item.Zariadenie.Spotreba;
+                    }
+            }
+            <tr>
+                <td class="p-1">
+                    Spotreba (W):
+                </td>
+                <td class="d-flex w-100 p-0">
+                    @for (int i = 0; i < 24; i++)
+                    {
+                        <span style="flex:1;border:1px solid red;flex-grow:1">@Model.Hodiny[i]</span>
+                    }
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @($"[{string.Join(",",Enumerable.Range(0,24).ToArray())}]"),
+            datasets: [{
+                label: 'all',
+                data: @($"[{string.Join(",",Model.Hodiny)}]"),
+                backgroundColor: "rgba(153,255,51,0.4)"
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
+

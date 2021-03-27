@@ -1,0 +1,69 @@
+﻿@page
+@model VSDProjekt.Pages.Zariadenia.IndexModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].Nazov)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].Spotreba)
+                </th>
+                <th style="width:50%">
+                    @Html.DisplayNameFor(model => model.zariadenie[0].Dlzka)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.zariadenie[0].UserID)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.zariadenie)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazov)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Spotreba) W/h
+                    </td>
+                    <td>
+                        <div style="width:100%">
+                            <div style="width:@((int)((item.Dlzka/24)*100)+"%");background-color:rgba(255,265,0,0.5);display:inline-block">
+                                @Html.DisplayFor(modelItem => item.Dlzka) h
+                            </div>
+                        </div>
+                        
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    @if (item.UserID == UserManager.GetUserId(User))
+                    {
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.zariadenieID">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.zariadenieID">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.zariadenieID">Delete</a>
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
