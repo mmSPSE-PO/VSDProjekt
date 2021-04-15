@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VSDProjekt.Data;
 
-namespace VSDProjekt.Data.Migrations
+namespace VSDProjekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -16,7 +16,7 @@ namespace VSDProjekt.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -219,6 +219,47 @@ namespace VSDProjekt.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("VSDProjekt.Model.connected", b =>
+                {
+                    b.Property<int>("connectedID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ParentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Spotreba")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Spustene")
+                        .HasColumnType("bit");
+
+                    b.HasKey("connectedID");
+
+                    b.HasIndex("ParentID");
+
+                    b.ToTable("connected");
+                });
+
+            modelBuilder.Entity("VSDProjekt.Model.controller", b =>
+                {
+                    b.Property<int>("controllerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DeviceSerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("controllerID");
+
+                    b.ToTable("controller");
+                });
+
             modelBuilder.Entity("VSDProjekt.Model.zariadenie", b =>
                 {
                     b.Property<int>("zariadenieID")
@@ -318,6 +359,17 @@ namespace VSDProjekt.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("VSDProjekt.Model.connected", b =>
+                {
+                    b.HasOne("VSDProjekt.Model.controller", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("VSDProjekt.Model.zasuvka", b =>
                 {
                     b.HasOne("VSDProjekt.Model.zariadenie", "Zariadenie")
@@ -325,6 +377,11 @@ namespace VSDProjekt.Data.Migrations
                         .HasForeignKey("zariadenieID");
 
                     b.Navigation("Zariadenie");
+                });
+
+            modelBuilder.Entity("VSDProjekt.Model.controller", b =>
+                {
+                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

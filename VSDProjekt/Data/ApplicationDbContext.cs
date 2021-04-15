@@ -15,5 +15,7 @@ namespace VSDProjekt.Data
         }
         public DbSet<VSDProjekt.Model.zariadenie> zariadenie { get; set; }
         public DbSet<VSDProjekt.Model.zasuvka> zasuvka { get; set; }
+        public DbSet<VSDProjekt.Model.controller> controller { get; set; }
+        public DbSet<VSDProjekt.Model.connected> connected { get; set; }
     }
 }

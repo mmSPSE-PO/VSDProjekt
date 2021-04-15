@@ -1,0 +1,57 @@
+﻿@page
+@model VSDProjekt.Pages.controllers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.controller[0].userID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.controller[0].DeviceSerialNumber)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.controller) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.userID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeviceSerialNumber)
+            </td>
+            <td>
+                @if(item.Children != null)
+                {
+                    @foreach (var child in item.Children)
+                    {
+                        <span>@child.Spotreba</span>
+                    }
+                }
+                else 
+                { 
+                    <span>Null</span>
+                }
+
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.controllerID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.controllerID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.controllerID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
