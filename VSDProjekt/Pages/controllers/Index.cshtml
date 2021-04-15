@@ -47,9 +47,8 @@
 
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.controllerID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.controllerID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.controllerID">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.controllerID"><i class="far fa-edit"></i></a>
+                <a asp-page="./Delete" asp-route-id="@item.controllerID"><i class="far fa-trash-alt"></i></a>
             </td>
         </tr>
 }

@@ -26,9 +26,6 @@
                 <th style="width:50%">
                     @Html.DisplayNameFor(model => model.zariadenie[0].Dlzka)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.zariadenie[0].UserID)
-                </th>
                 <th></th>
             </tr>
         </thead>
@@ -44,21 +41,18 @@
                     </td>
                     <td>
                         <div style="width:100%">
-                            <div style="width:@((int)((item.Dlzka/24)*100)+"%");background-color:rgba(255,265,0,0.5);display:inline-block">
+                            <div style="width:@((int)((item.Dlzka/24)*100)+"%");background-color:rgba(3, 102, 214,0.5);display:inline-block">
                                 @Html.DisplayFor(modelItem => item.Dlzka) h
                             </div>
                         </div>
                         
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserID)
-                    </td>
+
                     @if (item.UserID == UserManager.GetUserId(User))
                     {
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.zariadenieID">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.zariadenieID">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.zariadenieID">Delete</a>
+                            <a asp-page="./Edit" asp-route-id="@item.zariadenieID"><i class="far fa-edit"></i></a>
+                            <a asp-page="./Delete" asp-route-id="@item.zariadenieID"><i class="far fa-trash-alt"></i></a>
                         </td>
                     }
 

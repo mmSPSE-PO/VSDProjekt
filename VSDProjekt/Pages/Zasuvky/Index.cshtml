@@ -1,126 +1,142 @@
 ﻿@page
 @model VSDProjekt.Pages.Zasuvky.IndexModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 @{
     ViewData["Title"] = "Index";
 }
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<div class="container">
-    <h1>Index</h1>
-
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.zasuvka[0].Zariadenie)
-                </th>
-                <th>
-                    Časová os:
-                    @*Html.DisplayNameFor(model => model.zasuvka[0].StartTime)*@
-                </th>
-                <th class="d-none">
-                    @Html.DisplayNameFor(model => model.zasuvka[0].UserID)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="p-1">
-                    Čas (h):
-                </td>
-                <td class="d-flex w-100 p-0">
-                    @for (int i = 0; i < 12; i++)
-                    {
-                        <span style="flex:1;border-left:1px solid red;flex-grow:1">@(i * 2):00</span>
-                    }
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            @foreach (var item in Model.zasuvka)
-            {
+@if (SignInManager.IsSignedIn(User))
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <div class="container">
+        <h1>Index</h1>
+        <canvas id="myChart" style="background-color:#F9F9F9;" class="my-3 shadow-lg rounded p-3"></canvas>
+        <p>
+            <a asp-page="Create">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @if (item.zariadenieID == null)
-                        {
-                            <img src="/img/Unplug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px" />
-                        }
-                        else
-                        {
-                            <img src="/img/plug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px" />
-                        }
-                        @Html.DisplayFor(modelItem => item.Zariadenie.Nazov)
+                    <th>
+                        @Html.DisplayNameFor(model => model.zasuvka[0].Zariadenie)
+                    </th>
+                    <th>
+                        Časová os:
+                        @*Html.DisplayNameFor(model => model.zasuvka[0].StartTime)*@
+                    </th>
+                    <th class="d-none">
+                        @Html.DisplayNameFor(model => model.zasuvka[0].UserID)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="p-1">
+                        Čas (h):
                     </td>
-                    <td style="width:100%" class="position-relative pl-0 pr-0">
-                        @if (item.Zariadenie != null)
+                    <td class="d-flex w-100 p-0">
+                        @for (int i = 0; i < 12; i++)
                         {
-                            <div style="width:100%;">
-                                <p style="width:@((int)((item.Zariadenie.Dlzka / 24.0) * 100.0) + "%");margin-left:@((int)((item.StartTime.Hour / 24.0) * 100.0) + "%");background-color:rgba(255,265,0,0.5);display:inline-block">
-                                    @Html.DisplayFor(modelItem => item.Zariadenie.Dlzka) h
-                                </p>
-                            </div>
-                            @Html.DisplayFor(modelItem => item.StartTime);
+                            <span style="flex:1;border-left:1px solid rgb(3, 102, 214);flex-grow:1">@(i * 2):00</span>
                         }
-                        <div class="position-absolute w-100 h-100 d-flex flex-fill align-items-stretch" style="left:0;top:0;right:0;bottom:0">
-                            @for (int i = 0; i < 24; i++)
-                            {
-                                <div class="h-100 d-flex" style="flex-grow: 1; border-width:0 0.5px; border-style: solid;border-color:rgba(0,0,0,0.2)">_ </div>
-                            }
-                        </div>
-
-                    </td>
-                    <td class="d-none">
-                        @Html.DisplayFor(modelItem => item.UserID)
                     </td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.zasuvkaID">Edit</a>
-                        <a asp-page="./Delete" asp-route-id="@item.zasuvkaID">Delete</a>
+                    </td>
+                    <td>
                     </td>
                 </tr>
-                if (item.Zariadenie != null)
-                    for (int i = 0; i < 24; i++)
-                    {
-                        double a = item.StartTime.Hour + item.StartTime.Minute / 60.0;
-                        if ((i >= a) && (i <= a + item.Zariadenie.Dlzka))
-                            Model.Hodiny[i] += item.Zariadenie.Spotreba;
-                    }
-            }
-            <tr>
-                <td class="p-1">
-                    Spotreba (W):
-                </td>
-                <td class="d-flex w-100 p-0">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span style="flex:1;border:1px solid red;flex-grow:1">@Model.Hodiny[i]</span>
-                    }
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <canvas id="myChart"></canvas>
-</div>
+                @foreach (var item in Model.zasuvka)
+                {
+                    <tr>
+                        <td>
+                            @if (item.zariadenieID == null)
+                            {
+                                <img src="/img/Unplug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px" />
+                            }
+                            else
+                            {
+                                <img src="/img/plug.png" alt="Alternate Text" class="img-fluid" style="max-height:100px" />
+                            }
+                            @Html.DisplayFor(modelItem => item.Zariadenie.Nazov)
+                        </td>
+                        <td style="width:100%" class="position-relative pl-0 pr-0">
+                            @if (item.Zariadenie != null)
+                            {
+                                <div style="width:100%;">
+                                    <p style="width:@((int)((item.Zariadenie.Dlzka / 24.0) * 100.0) + "%");margin-left:@((int)((item.StartTime.Hour / 24.0) * 100.0) + "%");background-color:rgba(3, 102, 214,0.5);display:inline-block;height:60px;line-height:60px">
+                                        @Html.DisplayFor(modelItem => item.Zariadenie.Dlzka) h
+                                    </p>
+                                </div>
+                                @*Html.DisplayFor(modelItem => item.StartTime);*@
+                            }
+                            <div class="position-absolute w-100 h-100 d-flex flex-fill align-items-stretch" style="left:0;top:0;right:0;bottom:0">
+                                @for (int i = 0; i < 24; i++)
+                                {
+                                    <div class="h-100 d-flex" style="flex-grow: 1; border-width:0 0.5px; border-style: solid;border-color:rgba(0,0,0,0.2)"> </div>
+                                }
+                            </div>
 
-<script>
+                        </td>
+                        <td class="d-none">
+                            @Html.DisplayFor(modelItem => item.UserID)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.zasuvkaID"><i class="far fa-edit"></i></a>
+                            <a asp-page="./Delete" asp-route-id="@item.zasuvkaID"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    if (item.Zariadenie != null)
+                        for (int i = 0; i < 24; i++)
+                        {
+                            double a = item.StartTime.Hour + item.StartTime.Minute / 60.0;
+                            if ((i >= a) && (i <= a + item.Zariadenie.Dlzka))
+                                Model.Hodiny[i] += item.Zariadenie.Spotreba;
+                        }
+                }
+
+                <tr class="sumrow shadow" style="border-top:1px solid black">
+                    <th class="p-1 h6 small font-weight-bold">
+                        Spotreba (W):
+                    </th>
+                    <th class="d-flex w-100 p-0">
+                        @for (int i = 0; i < 24; i++)
+                        {
+                            <span style="flex:1;border-left:1px solid rgba(0,0,0,0.5);border-right:1px solid rgba(0,0,0,0.5);flex-grow:1">@Model.Hodiny[i]</span>
+                        }
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: @($"[{string.Join(",",Enumerable.Range(0,24).ToArray())}]"),
-            datasets: [{
-                label: 'all',
-                data: @($"[{string.Join(",",Model.Hodiny)}]"),
-                backgroundColor: "rgba(153,255,51,0.4)"
-            }]
+            labels: @($"[{string.Join(",", Enumerable.Range(0, 24).ToArray())}]"),
+            datasets: [
+                {
+                    label: 'all',
+                    data: @($"[{string.Join(",", Model.Hodiny)}]"),
+                    backgroundColor: "rgba(3, 102, 214,0.5)"
+                },
+                {
+                    label: 'MKR',
+                    data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
+                    borderColor: "rgba(255,0,0,0.6)",
+                    backgroundColor: "rgba(0,0,0,0)"
+                }
+            ]
         },
         options: {
             scales: {
@@ -129,9 +145,105 @@
                         beginAtZero: true
                     }
                 }]
+            },
+
+            title: {
+                display: true,
+                text: 'Spotreba v domácnosti'
             }
+
         }
     });
 
-</script>
+    </script>
+}
+else
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <div class="container">
+        <h1>Dopočítanie predbežnej spotreby</h1>
+        <p>V rámci tejto podstránky po zaregistrovaní je možné si pridať zariadenia a piriradiť tieto zariadenia zásuvkám.</p>
+        <p>Zariadení aj zásuviek môžete mať vytvorných viac ako ich vytvoríte ale program počíta spotrebu až z priradených zariadení.</p>
+        <p>Príklad dopočítanej spotreby, môže vyzerať aj takto. Každé zariadenie môže mať maximálnu spotrebu 4400W, a následna MKR je číslo 15000.</p>
+        <p>Vaša vytvorená spotreba Vám po odhlásení zostane a môžete sa naspäť ku nej vrátiť, ak chcete použiť iné zariadenia.</p>
+        <canvas id="myChart" style="background-color:#F9F9F9;" class="my-3 shadow-lg rounded p-3"></canvas>
+    </div>
+    
 
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @($"[{string.Join(",", Enumerable.Range(0, 24).ToArray())}]"),
+            datasets: [
+                {
+                    label: 'all',
+                    data: [6400, 6400, 6200, 1200, 2000, 1500, 7200, 7200, 7200, 800, 900, 1000, 2000, 2000, 2100, 4000, 3700, 3600, 3700, 3000, 2000, 1700, 1500, 3000],
+                    backgroundColor: "rgba(3, 102, 214,0.5)"
+                },
+                {
+                    label: 'MKR',
+                    data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
+                    borderColor: "rgba(255,0,0,0.6)",
+                    backgroundColor: "rgba(0,0,0,0)"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+
+            title: {
+                display: true,
+                text: 'Spotreba v domácnosti'
+            }
+
+        }
+    });
+
+        @*
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: "[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]",
+                datasets: [
+                    {
+                        label: 'all',
+                        data: [6400, 6400, 6200, 1200, 2000, 1500, 7200, 7200, 7200, 800, 900, 1000, 2000, 2000, 2100, 4000, 3700, 3600, 3700, 3000, 2000, 1700, 1500, 3000],
+                        backgroundColor: "rgba(3, 102, 214,0.5)"
+                    },
+                    {
+                        label: 'MKR',
+                        data: [15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000],
+                        borderColor: "rgba(255,0,0,0.6)",
+                        backgroundColor: "rgba(0,0,0,0)"
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+
+                title: {
+                    display: true,
+                    text: 'Spotreba v domácnosti'
+                }
+
+            }
+        });
+            *@
+    </script>
+}

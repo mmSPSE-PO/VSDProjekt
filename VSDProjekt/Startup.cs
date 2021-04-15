@@ -37,6 +37,10 @@ namespace VSDProjekt
             {
                 options.Conventions.AuthorizeFolder("/Zariadenia");
                 options.Conventions.AuthorizeFolder("/Zasuvky");
+                options.Conventions.AllowAnonymousToPage("/Zasuvky/Index");
+                options.Conventions.AuthorizeFolder("/controller");
+                options.Conventions.AuthorizeFolder("/connected");
+
             });
         }
 

@@ -11,7 +11,7 @@ namespace VSDProjekt.Model
         public int zariadenieID { get; set; }
         [MaxLength(200)]
         public string Nazov { get; set; }
-        [Range(0.0,220*20, ErrorMessage = "Pole musí byť väščie ako 0 a menšie ako 4400")]
+        [Range(0.0,220*20, ErrorMessage = "Prekročená MRK hodnota môže byť len v rozsahu 0 a menšie ako 4400")]
         public float Spotreba { get; set; }
         [Range(0.0, 24, ErrorMessage = "Pole musí byť väščie ako 0 a menšie ako 24")]
         public float Dlzka { get; set; }
