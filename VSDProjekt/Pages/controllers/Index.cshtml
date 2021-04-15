@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.controller[0].userID)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.controller[0].DeviceSerialNumber)
             </th>
             <th></th>
@@ -26,9 +23,6 @@
     <tbody>
 @foreach (var item in Model.controller) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.userID)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeviceSerialNumber)
             </td>

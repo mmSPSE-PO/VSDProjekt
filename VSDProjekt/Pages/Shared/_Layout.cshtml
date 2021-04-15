@@ -35,12 +35,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Zariadenia/Index">Zariadenia |</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/connects/Index">Devices</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/controllers/Index">Controllers</a>
-                            </li>
+                            @if (UserManager.GetUserId(User).Equals("ed4e4e2b-1f2c-44b7-b9e0-aac84462e62f"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/connects/Index">Devices</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/controllers/Index">Controllers</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial" />

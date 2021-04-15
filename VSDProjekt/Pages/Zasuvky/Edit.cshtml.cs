@@ -37,7 +37,8 @@ namespace VSDProjekt.Pages.Zasuvky
             {
                 return NotFound();
             }
-            ViewData["zariadenieID"] = new SelectList(_context.zariadenie, "zariadenieID", "Nazov");
+            var b = _context.zariadenie.Where(e => e.UserID.Equals(_userManager.GetUserId(User)));
+            ViewData["zariadenieID"] = new SelectList(b, "zariadenieID", "Nazov");
             return Page();
         }
 
