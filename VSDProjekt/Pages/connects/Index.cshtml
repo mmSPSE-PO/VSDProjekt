@@ -5,47 +5,47 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.connected[0].Spotreba)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.connected[0].Spustene)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.connected[0].Parent)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.connected) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Spotreba)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Spustene)
-                <a asp- class="btn btn-secondary ml-2 d-none">
-                    @(item.Spustene ? "Vypnúť" : "Zapnúť")
-                </a>
-                <form method="post"><button type="submit" class="btn btn-secondary d-none">@(item.Spustene ? "Vypnúť" : "Zapnúť")</button></form>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Parent.controllerID)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.connectedID"><i class="far fa-edit"></i></a>
-                <a asp-page="./Delete" asp-route-id="@item.connectedID"><i class="far fa-trash-alt"></i></a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+    <h1>Index</h1>
+
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.connected[0].Spotreba)
+                </th>
+                <th>
+                    Spustené
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.connected)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Spotreba)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Spustene)
+                        <a asp- class="btn btn-secondary ml-2 d-none">
+                            @(item.Spustene ? "Vypnúť" : "Zapnúť")
+                        </a>
+                        <form method="post"><button type="submit" class="btn btn-secondary d-none">@(item.Spustene ? "Vypnúť" : "Zapnúť")</button></form>
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.connectedID"><i class="far fa-edit"></i></a>
+                        <a asp-page="./Delete" asp-route-id="@item.connectedID"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

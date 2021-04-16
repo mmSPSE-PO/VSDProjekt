@@ -10,22 +10,22 @@
 }
 <div class="container">
     <h1>Zariadenia</h1>
-    <p>Tu si viete vytvoriť virtuálne zariadenia na výpočet priebežnej spotreby.</p>
-    <p>Pokúste sa zadávať najpravdivejšie informácie aby boli aj výsledky najbližšie.</p>
+    <p>Na tejto podstránke si viete vytvoriť virtuálne zariadenia na výpočet priebežnej spotreby.</p>
+    <p>Pokúste sa zadávať čo najpravdivejšie informácie, aby boli aj výsledky blízke realite.</p>
     <p>
-        <a asp-page="Create">Create New</a>
+        <a asp-page="Create"><i class="far fa-plus-square"></i> Pridať nové zariadenie</a>
     </p>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.zariadenie[0].Nazov)
+                    Názov
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.zariadenie[0].Spotreba)
+                    Spotreba
                 </th>
                 <th style="width:50%">
-                    @Html.DisplayNameFor(model => model.zariadenie[0].Dlzka)
+                    Dĺžka
                 </th>
                 <th></th>
             </tr>

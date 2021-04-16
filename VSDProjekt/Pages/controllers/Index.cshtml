@@ -4,47 +4,51 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container">
 
-<h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.controller[0].DeviceSerialNumber)
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.controller) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeviceSerialNumber)
-            </td>
-            <td>
-                @if(item.Children != null)
-                {
-                    @foreach (var child in item.Children)
-                    {
-                        <span>@child.Spotreba</span>
-                    }
-                }
-                else 
-                { 
-                    <span>Null</span>
-                }
+    <h1>Index</h1>
 
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.controllerID"><i class="far fa-edit"></i></a>
-                <a asp-page="./Delete" asp-route-id="@item.controllerID"><i class="far fa-trash-alt"></i></a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Sériové číslo zariadenia
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.controller)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeviceSerialNumber)
+                    </td>
+                    <td>
+                        @if (item.Children != null)
+                        {
+                            @foreach (var child in item.Children)
+                            {
+                                <span>@child.Spotreba</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>Null</span>
+                        }
+
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.controllerID"><i class="far fa-edit"></i></a>
+                        <a asp-page="./Delete" asp-route-id="@item.controllerID"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
