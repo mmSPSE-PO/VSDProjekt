@@ -34,7 +34,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="tbodi">
                 <tr>
                     <td class="p-1">
                         Čas (h):
@@ -67,17 +67,29 @@
                         <td style="width:100%" class="position-relative pl-0 pr-0">
                             @if (item.Zariadenie != null)
                             {
-                                <div style="width:100%;">
-                                    <p style="width:@((int)((item.Zariadenie.Dlzka / 24.0) * 100.0) + "%");margin-left:@((int)((item.StartTime.Hour / 24.0) * 100.0) + "%");background-color:rgba(3, 102, 214,0.5);display:inline-block;height:60px;line-height:60px">
-                                        @Html.DisplayFor(modelItem => item.Zariadenie.Dlzka) h
+                            <div style="width:100%; position:relative">
+
+                                @if (item.StartTime.Hour + (item.StartTime.Minute / 60.0) + item.Zariadenie.Dlzka > 24)
+                                {
+                                    <p style="position:absolute; width:@((int)(((item.Zariadenie.Dlzka - (item.StartTime.Hour + (item.StartTime.Minute / 60.0) + item.Zariadenie.Dlzka-24)) / 24.0) * 100.0) + "%");margin-left:@((int)Math.Ceiling((decimal)(((item.StartTime.Hour + item.StartTime.Minute /60.0 )/ 24.0) * 100.0)) + "%");background-color:rgba(3, 102, 214,0.5);display:inline-block;height:60px;line-height:60px;content:""">
                                     </p>
-                                </div>
+                                    <p style="position:absolute; width:@((int)Math.Ceiling(((item.StartTime.Hour + (item.StartTime.Minute / 60.0) + item.Zariadenie.Dlzka-24)/24.0)*100.0)+"%"); height:60px; background-color:rgba(3, 102, 214,0.5);content:" "">
+                      
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p style="position:absolute; width:@((int)Math.Round((item.Zariadenie.Dlzka / 24.0) * 100.0) + "%");margin-left:@((int)Math.Round((item.StartTime.Hour / 24.0) * 100.0) + "%");background-color:rgba(3, 102, 214,0.5);display:inline-block;height:60px;line-height:60px;content:" "">
+                                    </p>
+                                }
+
+                            </div>
                                 @*Html.DisplayFor(modelItem => item.StartTime);*@
                             }
-                            <div class="position-absolute w-100 h-100 d-flex flex-fill align-items-stretch" style="left:0;top:0;right:0;bottom:0">
+                            <div class="position-absolute w-100 h-100 d-flex flex-fill align-items-stretch" style="left:0;top:0;right:0;bottom:0;box-sizing:border-box">
                                 @for (int i = 0; i < 24; i++)
                                 {
-                                    <div class="h-100 d-flex" style="flex-grow: 1; border-width:0 0.5px; border-style: solid;border-color:rgba(0,0,0,0.2)"> </div>
+                                    <div class="h-100 d-flex" style="flex-grow: 1; border-width:0 0.5px; border-style: solid;border-color:rgba(0,0,0,0.2); box-sizing:border-box"> </div>
                                 }
                             </div>
 
@@ -91,12 +103,23 @@
                         </td>
                     </tr>
                     if (item.Zariadenie != null)
+                    {
                         for (int i = 0; i < 24; i++)
                         {
                             double a = item.StartTime.Hour + item.StartTime.Minute / 60.0;
                             if ((i >= a) && (i <= a + item.Zariadenie.Dlzka))
                                 Model.Hodiny[i] += item.Zariadenie.Spotreba;
                         }
+                        if(item.StartTime.Hour + (item.StartTime.Minute / 60.0) + item.Zariadenie.Dlzka > 24)
+                        {
+                            var a = item.StartTime.Hour + (item.StartTime.Minute / 60.0) + item.Zariadenie.Dlzka - 24;
+                            for(int i = 0; i < a; i++)
+                            {
+                                Model.Hodiny[i] += item.Zariadenie.Spotreba;
+                            }
+                        }
+                        Model.Hodiny[24] = Model.Hodiny[0];
+                    }
                 }
 
                 <tr class="sumrow shadow" style="border-top:1px solid black">
@@ -124,7 +147,7 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: @($"[{string.Join(",", Enumerable.Range(0, 24).ToArray())}]"),
+            labels: @($"[{string.Join(",", Enumerable.Range(0, 25).ToArray())}]"),
             datasets: [
                 {
                     label: 'all',
@@ -133,7 +156,7 @@
                 },
                 {
                     label: 'MKR',
-                    data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
+                    data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
                     borderColor: "rgba(255,0,0,0.6)",
                     backgroundColor: "rgba(0,0,0,0)"
                 }
@@ -176,16 +199,16 @@ else
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: @($"[{string.Join(",", Enumerable.Range(0, 24).ToArray())}]"),
+            labels: @($"[{string.Join(",", Enumerable.Range(0, 25).ToArray())}]"),
             datasets: [
                 {
                     label: 'all',
-                    data: [6400, 6400, 6200, 1200, 2000, 1500, 7200, 7200, 7200, 800, 900, 1000, 2000, 2000, 2100, 4000, 3700, 3600, 3700, 3000, 2000, 1700, 1500, 3000],
+                    data: [6400, 6400, 6200, 1200, 2000, 1500, 7200, 7200, 7200, 800, 900, 1000, 2000, 2000, 2100, 4000, 3700, 3600, 3700, 3000, 2000, 1700, 1500, 3000,5000],
                     backgroundColor: "rgba(3, 102, 214,0.5)"
                 },
                 {
                     label: 'MKR',
-                    data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
+                    data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
                     borderColor: "rgba(255,0,0,0.6)",
                     backgroundColor: "rgba(0,0,0,0)"
                 }

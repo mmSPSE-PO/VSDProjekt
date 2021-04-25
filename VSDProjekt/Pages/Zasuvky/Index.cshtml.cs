@@ -20,7 +20,7 @@ namespace VSDProjekt.Pages.Zasuvky
         {
             _context = context;
             _userManager = userManager;
-            Hodiny = new float[24];
+            Hodiny = new float[25];
         }
 
         public IList<zasuvka> zasuvka { get;set; }
